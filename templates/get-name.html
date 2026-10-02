@@ -1,0 +1,44 @@
+<div class="grid">
+    <form method="post" action="/save-db">
+        Name: <input name="name"> <button>Save</button>
+    </form>
+    <form method="post" action="/save-text">
+        Names to text file: <input name="name-text-file"> <button>Save</button>
+    </form>
+</div>
+<br>
+<div class="grid">
+    <a href="/names">View names</a>
+    <a href="/names-text-file">View names in text file</a>
+</div>
+
+<style>
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+</style>
+
+<script>
+    document.querySelectorAll('button').forEach(btn => {
+        let dodges = 0;
+        let start = null;
+        btn.style.transition = 'transform 0.2s';
+
+        btn.addEventListener('mouseenter', () => {
+            if (dodges >= 3) {
+                btn.textContent = 'Fine, you win! ';
+                return;
+            }
+            dodges++;
+            if (!start) 
+                start = btn.getBoundingClientRect();
+            const targetX = Math.random() * (window.innerWidth - start.width);
+            const targetY = Math.random() * (window.innerHeight - start.height);
+            const x = targetX - start.left;
+            const y = targetY - start.top;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    });
+</script>
